@@ -21,6 +21,16 @@ class EasyJsonParserTest(unittest.TestCase):
         self.assertEqual(
             configs.get('database.mysql.host'), 'localhost'
         )
+        
+    # Testing by multi args
+    def test_access_data_by_multi_args(self):
+        configs = EasyJsonParser(**self.default)
+        self.assertEqual(
+            configs('database', 'mysql', 'host'), 'localhost'
+        )
+        self.assertEqual(
+            configs.get('database', 'mysql', 'host'), 'localhost'
+        )
     
     # Testing with delimiter
     def test_valid_add_new_delimiter_and_use_it(self):

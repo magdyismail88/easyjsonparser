@@ -25,7 +25,7 @@ options = {
 
 configs = EasyJsonParser(**options)
 or
-configs = EasyJsonParser(path='path-here')
+configs = EasyJsonParser(path='path-here', filename='config-filename-here')
 db_hostname = configs('database.mysql.host')
 ```
 <br>
