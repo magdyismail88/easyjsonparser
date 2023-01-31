@@ -2,7 +2,7 @@
 
 Easy JSON Parser easy way to access or parsing JSON content, using JSON file as a config file, using with web services, APIS
 
-__
+\
 
 > ##### **Example 1**
 
@@ -13,7 +13,7 @@ db_hostname = configs('database.mysql.host')
 # or
 db_hostname = configs.get('database.mysql.host')
 ```
-__
+\
 
 > ##### **Example 2**
 
