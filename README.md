@@ -1,6 +1,7 @@
 ### Easy Json Parser
 
-Easy Json Parser easy way to access or parsing json content using json file as a config file using with web services or apis
+Easy JSON Parser easy way to access or parsing JSON content, using JSON file as a config file using with web services, APIS
+
 
 > ##### **Example 1**
 
@@ -11,6 +12,7 @@ db_hostname = configs('database.mysql.host')
 # or
 db_hostname = configs.get('database.mysql.host')
 ```
+
 
 > ##### **Example 2**
 
@@ -26,6 +28,7 @@ configs = EasyJsonParser(path='path-here')
 db_hostname = configs('database.mysql.host')
 ```
 
+
 > ##### Example 3
 
 ```
@@ -40,6 +43,7 @@ buf = '''{
 jparser = EasyJsonParserIO(buf)
 items = parser('data.items')
 ```
+
 
 > ##### Example 4
 
