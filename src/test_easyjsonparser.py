@@ -1,6 +1,10 @@
 import unittest
-import easyjsonparser
-from easyjsonparser import EasyJsonParser, EasyJsonParserIO
+from easyjsonparser import (
+    EasyJsonParser, 
+    EasyJsonParserIO,
+    WrongDirOrFilename,
+    InvalidJsonFormat
+) 
 
 
 class EasyJsonParserTest(unittest.TestCase):
@@ -68,7 +72,7 @@ class EasyJsonParserTest(unittest.TestCase):
             "filename": "config-conf"
         }
         self.assertRaises(
-            easyjsonparser.WrongDirOrFilename,
+            WrongDirOrFilename,
             EasyJsonParser,
             **json_file_with_conf_ext
         )
@@ -80,7 +84,7 @@ class EasyJsonParserTest(unittest.TestCase):
             "filename": "config-without-ex"
         }
         self.assertRaises(
-            easyjsonparser.WrongDirOrFilename,
+            WrongDirOrFilename,
             EasyJsonParser,
             **json_file_with_conf_ext
         )
@@ -113,7 +117,7 @@ class EasyJsonParserTest(unittest.TestCase):
         }
         
         self.assertRaises(
-            easyjsonparser.InvalidJsonFormat,
+            InvalidJsonFormat,
             EasyJsonParser,
             **bad_json
         )
@@ -125,7 +129,7 @@ class EasyJsonParserTest(unittest.TestCase):
             'filename': 'invalid.json'
         }
         self.assertRaises(
-            easyjsonparser.WrongDirOrFilename,
+            WrongDirOrFilename,
             EasyJsonParser,
             **bad_json
         )
@@ -184,7 +188,7 @@ class EasyJsonParserIOTest(unittest.TestCase):
         '''
         
         self.assertRaises(
-            easyjsonparser.InvalidJsonFormat,
+            InvalidJsonFormat,
             EasyJsonParserIO,
             invalid_json_buffer
         )
