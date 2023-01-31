@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "database": {
+      "mysql": {
+        "host": "localhost",
+        "username": "magdy",
+        "password": "password"
+      },
+      "sqlite3": "database.sqlite3",
+      "postegresql": {
+        "connection-string": "connection-string-here"
+      }
+  }
+}

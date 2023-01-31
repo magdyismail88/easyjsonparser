@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "filename": "sub-config",
+  "database": {
+      "mysql": {
+        "host": "localhost",
+        "username": "magdy",
+        "password": "password"
+      },
+      "sqlite3": "database.sqlite3",
+      "postegresql": {
+        "connection-string": "connection-string-here"
+      }
+  }
+}
