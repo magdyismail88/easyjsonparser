@@ -104,9 +104,9 @@ class EasyJsonParser:
 
 
 class EasyJsonParserIO(EasyJsonParser):
-    def __init__(self, streaming):
+    def __init__(self, buffer):
         try:
-            self.file_content = json.loads(streaming)
+            self.file_content = json.loads(buffer)
         except json.decoder.JSONDecodeError:
             raise InvalidJsonFormat('Invalid json format')
             
