@@ -13,13 +13,15 @@ using with web services or apis
 --
 Example 1 with static files:
 
-configs = EasyJsonParser()
-db_hostname = configs('database.mysql.host')
+config = EasyJsonParser()
+db_hostname = config('database.mysql.host')
 or
-db_hostname = configs.get('database.mysql.host')
+db_hostname = config.get('database.mysql.host')
+or
+db_hostname = config('database', 'mysql', 'host')
 
 --
-Example 2 using with buffers
+Example 2 using with streaming
 buf = '''{
     "data": {
         "items": [
@@ -38,7 +40,6 @@ import requests
 res = requests.get('http://example.com/api/v1/items')
 jparser = EasyJsonParserIO(res.text)
 items = jparser('data.items')
-
 """
 
 class WrongDirOrFilename(Exception):
@@ -50,7 +51,7 @@ class InvalidJsonFormat(Exception):
 
 class EasyJsonParser:
     
-    allowed_delimiters = ('.', ':',)
+    allowed_delimiters = {'.', ':',}
     
     def __init__(self, **kwargs):
         base_dir = kwargs['path'] if 'path' in kwargs else Path(__file__).resolve().parent.parent
@@ -66,12 +67,12 @@ class EasyJsonParser:
             try:
                 self.file_content = json.loads(f.read())
             except json.decoder.JSONDecodeError:
-                raise InvalidJsonFormat('Json invalid format')
+                raise InvalidJsonFormat('Invalid json format')
     
     def add_delimiters(self, *args):
-        self.allowed_delimiters = self.allowed_delimiters + args
+        self.allowed_delimiters.update(*args)
     
-    def determine_delimiter(self, syntax):
+    def _determine_delimiter(self, syntax):
         for symbol in self.allowed_delimiters:
             if len(syntax.split(symbol)) > 1:
                 return symbol
@@ -81,8 +82,8 @@ class EasyJsonParser:
         if(len(args) > 1):
             keys = args
         else:
-            d = self.determine_delimiter(args[0]) 
-            delimiter = d if d is not None else '.'
+            determined_delimiter = self._determine_delimiter(args[0]) 
+            delimiter = determined_delimiter if determined_delimiter is not None else '.'
             keys = args[0].split(delimiter)
 
         identifiers = ''
@@ -99,11 +100,13 @@ class EasyJsonParser:
     def __str__(self):
         return f"{self.file_content}"
     
-    
+    __repr__ = __str__
+
+
 class EasyJsonParserIO(EasyJsonParser):
-    def __init__(self, buffer):
+    def __init__(self, streaming):
         try:
-            self.file_content = json.loads(buffer)
+            self.file_content = json.loads(streaming)
         except json.decoder.JSONDecodeError:
-            raise InvalidJsonFormat('Json invalid format')
+            raise InvalidJsonFormat('Invalid json format')
             

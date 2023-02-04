@@ -9,9 +9,11 @@ Easy JSON Parser easy way to access or parsing JSON content, using JSON file as 
 ```
 configs = EasyJsonParser()
 # by default reading from config.json
-db_hostname = configs('database.mysql.host')
+db_hostname = config('database.mysql.host')
 # or
-db_hostname = configs.get('database.mysql.host')
+db_hostname = config.get('database.mysql.host')
+# or 
+db_hostname = config.get('database', 'mysql', 'host')
 ```
 <br>
 
@@ -23,10 +25,10 @@ options = {
   'filename': 'config-file-name'
 }
 
-configs = EasyJsonParser(**options)
+config = EasyJsonParser(**options)
 or
-configs = EasyJsonParser(path='path-here', filename='config-filename-here')
-db_hostname = configs('database.mysql.host')
+config = EasyJsonParser(path='path-here', filename='config-filename-here')
+db_hostname = config('database.mysql.host')
 ```
 <br>
 
