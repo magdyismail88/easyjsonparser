@@ -159,8 +159,8 @@ class EasyJsonParserTest(unittest.TestCase):
 
 class EasyJsonParserIOTest(unittest.TestCase):
     # Testing with basic buffer
-    def test_valid_buffer(self):
-        json_buffer = '''
+    def test_valid_json(self):
+        json = '''
         {
             "key1": {
                 "key11": {
@@ -171,12 +171,12 @@ class EasyJsonParserIOTest(unittest.TestCase):
         }
         '''
         
-        configs = EasyJsonParserIO(json_buffer)
+        configs = EasyJsonParserIO(json)
         self.assertEqual(configs('key1.key11.key111'), 'value111')
     
-    # Testing with invald buffer
-    def test_invalid_buffer(self):
-        invalid_json_buffer = '''
+    # Testing invalid json
+    def test_invalid_stream(self):
+        invalid_json_stream = '''
         {
             "key1": {
                 "key11": {
@@ -190,7 +190,7 @@ class EasyJsonParserIOTest(unittest.TestCase):
         self.assertRaises(
             InvalidJsonFormat,
             EasyJsonParserIO,
-            invalid_json_buffer
+            invalid_json_stream
         )
 
 
