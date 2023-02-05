@@ -35,7 +35,7 @@ db_hostname = config('database.mysql.host')
 > ##### Example 3
 
 ```
-buf = '''{
+stream = '''{
     "data": {
         "items": [
             {"id": 1, "name": "Item 1"}
@@ -43,7 +43,7 @@ buf = '''{
     }
 }'''
 
-jparser = EasyJsonParserIO(buf)
+jparser = EasyJsonParserIO(stream)
 items = parser('data.items')
 ```
 <br>
