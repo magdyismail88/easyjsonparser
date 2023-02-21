@@ -7,7 +7,7 @@ Easy JSON Parser easy way to access or parsing JSON content, using JSON file as 
 > ##### **Example 1**
 
 ```
-configs = EasyJsonParser(filename='config')
+config = EasyJsonParser(filename='config')
 db_hostname = config('database.mysql.host')
 # or
 db_hostname = config.get('database.mysql.host')
