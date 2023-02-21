@@ -18,33 +18,38 @@ class EasyJsonParserTest(unittest.TestCase):
         
     # Testing normal file without any errors
     def test_valid_json_file(self):
-        configs = EasyJsonParser(**self.default)
+        jparser = EasyJsonParser(**self.default)
         self.assertEqual(
-            configs('database.mysql.host'), 'localhost'
+            jparser('database.mysql.host'), 'localhost'
         )
         self.assertEqual(
-            configs.get('database.mysql.host'), 'localhost'
+            jparser.get('database.mysql.host'), 'localhost'
         )
-        
+    # Testing default current path    
+    def test_default_current_path(self):
+        jparser = EasyJsonParser(filename="config")
+        self.assertEqual(
+            jparser('database', 'mysql', 'host'), 'localhost'
+        )
     # Testing by multi args
     def test_access_data_by_multi_args(self):
-        configs = EasyJsonParser(**self.default)
+        jparser = EasyJsonParser(**self.default)
         self.assertEqual(
-            configs('database', 'mysql', 'host'), 'localhost'
+            jparser('database', 'mysql', 'host'), 'localhost'
         )
         self.assertEqual(
-            configs.get('database', 'mysql', 'host'), 'localhost'
+            jparser.get('database', 'mysql', 'host'), 'localhost'
         )
     
     # Testing with delimiter
     def test_valid_add_new_delimiter_and_use_it(self):
-        configs = EasyJsonParser(**self.default)
+        jparser = EasyJsonParser(**self.default)
         self.assertEqual(
-            configs('database|mysql|host'), None
+            jparser('database|mysql|host'), None
         )
-        configs.add_delimiters('|')
+        jparser.add_delimiters('|')
         self.assertEqual(
-            configs('database|mysql|host'), 'localhost'
+            jparser('database|mysql|host'), 'localhost'
         )
     
     # Testing with different filename
@@ -53,8 +58,8 @@ class EasyJsonParserTest(unittest.TestCase):
             "path": self.fixtures_path,
             "filename": "another-config"
         }
-        configs = EasyJsonParser(**another_json_file)
-        self.assertEqual(configs('filename'), 'another-config')
+        jparser = EasyJsonParser(**another_json_file)
+        self.assertEqual(jparser('filename'), 'another-config')
         
     def test_using_different_dir(self):
         from os import sep
@@ -62,8 +67,8 @@ class EasyJsonParserTest(unittest.TestCase):
             "path": self.fixtures_path + sep + 'sub',
             "filename": "config"
         }
-        configs = EasyJsonParser(**another_sub_dir)
-        self.assertEqual(configs('filename'), 'sub-config')
+        jparser = EasyJsonParser(**another_sub_dir)
+        self.assertEqual(jparser('filename'), 'sub-config')
     
     # Testing using different file extension
     def test_not_using_file_with_different_extension(self):
@@ -91,22 +96,22 @@ class EasyJsonParserTest(unittest.TestCase):
         
     # Testing using more one delimiter pattern
     def test_invalid_using_multi_different_delemiter(self):
-        configs = EasyJsonParser(**self.default)
+        jparser = EasyJsonParser(**self.default)
         self.assertNotEqual(
-            configs('database.mysql-host'), 'localhost'
+            jparser('database.mysql-host'), 'localhost'
         )
         self.assertNotEqual(
-            configs.get('database.mysql,host'), 'localhost'
+            jparser.get('database.mysql,host'), 'localhost'
         )
         
     # Testing enter wrong information
     def test_using_invalid_identifiers(self):
-        configs = EasyJsonParser(**self.default)
+        jparser = EasyJsonParser(**self.default)
         self.assertEqual(
-            configs('this.key.invalid'), None
+            jparser('this.key.invalid'), None
         )
         self.assertEqual(
-            configs.get('this.key.invalid'), None
+            jparser.get('this.key.invalid'), None
         )
     
     # Testing with invalid json file or file has errors
@@ -171,8 +176,8 @@ class EasyJsonParserIOTest(unittest.TestCase):
         }
         '''
         
-        configs = EasyJsonParserIO(json)
-        self.assertEqual(configs('key1.key11.key111'), 'value111')
+        jparser = EasyJsonParserIO(json)
+        self.assertEqual(jparser('key1.key11.key111'), 'value111')
     
     # Testing invalid json
     def test_invalid_stream(self):

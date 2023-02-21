@@ -13,7 +13,7 @@ using with web services or apis
 --
 Example 1 with static files:
 
-config = EasyJsonParser()
+config = EasyJsonParser(filename='config')
 db_hostname = config('database.mysql.host')
 or
 db_hostname = config.get('database.mysql.host')
@@ -55,7 +55,7 @@ class EasyJsonParser:
     
     def __init__(self, **kwargs):
         base_dir = kwargs['path'] if 'path' in kwargs else Path(__file__).resolve().parent.parent
-        filename = kwargs['filename'] if 'filename' in kwargs else 'config'
+        filename = kwargs['filename']
         filename_without_ext = filename.split('.')[0]
 
         full_path = os.path.join(base_dir, f'{filename_without_ext}.json')
