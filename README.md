@@ -43,7 +43,7 @@ stream = '''{
 }'''
 
 jparser = EasyJsonParserIO(stream)
-items = parser('data.items')
+items = jparser('data.items')
 ```
 <br>
 
